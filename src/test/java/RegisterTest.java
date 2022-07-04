@@ -17,12 +17,11 @@ class RegisterTest extends GenericSeleniumTest {
         @Test
         public void registerTest (){
             //1.	Navigate to : https://demo.nopcommerce.com/
-            WebDriver driver = new ChromeDriver();
             driver.get("https://demo.nopcommerce.com/");
             //2.	Click LogIn - Menu
             driver.findElement(By.className("ico-login")).click();
             //3.	Click  Register - button
-            driver.findElement(By.className("button-1 register-button")).click();
+            driver.findElement(By.cssSelector("body > div.master-wrapper-page > div.master-wrapper-content > div > div > div > div.page-body > div.customer-blocks > div.new-wrapper.register-block > div.buttons > button")).click();
             //4.	Check the title of the page after clicking Register button
             driver.getTitle();
             //5.	Fill the register form as below:
@@ -36,7 +35,7 @@ class RegisterTest extends GenericSeleniumTest {
             driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[5]")).click();
             driver.findElement(By.name("DateOfBirthYear")).click();
             driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[85]")).click();
-            driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
+            driver.findElement(By.id("Email")).sendKeys("egliisufaj7@gmail.com");
             driver.findElement(By.id("Company")).sendKeys("Lufthansa Industry Solutions");
             //driver.findElement(By.id("Newsletter"));
             driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
@@ -45,7 +44,7 @@ class RegisterTest extends GenericSeleniumTest {
             //6.	Verify that register is successful
             //Should complete registration and asser registration through success message.
             //<div class="result">Your registration completed</div>
-            String actualString = driver.findElement(By.className("result")).getText();
+            String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText();
             String expectedString = "Your registration completed";
             assertTrue(actualString.contains(expectedString));
             //7.	Click Log out - Menu
@@ -57,12 +56,11 @@ class RegisterTest extends GenericSeleniumTest {
         //1.	Navigate to : https://demo.nopcommerce.com/
         //2.	Click LogIn - Menu
         //3.	Login with the credentials created from Test 1
-        WebDriver driver = new ChromeDriver();
         driver.get("https://demo.nopcommerce.com/");
         driver.findElement(By.className("ico-login")).click();
-        driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
+        driver.findElement(By.id("Email")).sendKeys("egliisufaj3@gmail.com");
         driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
-        driver.findElement(By.className("button-1 login-button")).click();
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")).click();
         //4.	Verify that login is successful:
         //-	“Welcome to our store text” - is displayed
         //-	Log out - Menu is displayed
@@ -79,7 +77,7 @@ class RegisterTest extends GenericSeleniumTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://demo.nopcommerce.com/");
         driver.findElement(By.className("ico-login")).click();
-        driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
+        driver.findElement(By.id("Email")).sendKeys("egliisufaj3@gmail.com");
         driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
         driver.findElement(By.className("button-1 login-button")).click();
         //1.	Hover over Computers Menu

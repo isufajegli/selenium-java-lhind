@@ -3,10 +3,12 @@ package generics;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class GenericSeleniumTest {
-    protected WebDriver driver;
+    protected WebDriver driver = new ChromeDriver();
 
     @BeforeAll
     public static void setup() {
@@ -16,7 +18,7 @@ public class GenericSeleniumTest {
     }
 
     @AfterEach
-    public void afterTest() throws InterruptedException {
+    public void afterTest() {
         driver.quit();
     }
 

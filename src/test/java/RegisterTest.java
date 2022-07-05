@@ -1,7 +1,4 @@
-import com.google.common.base.Verify;
 import generics.GenericSeleniumTest;
-import org.apache.commons.logging.Log;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,38 +6,42 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
-import java.awt.*;
+import pages.LoginPage;
+import pages.MainPage;
+import pages.RegisterPage;
+import utils.EmailGenerator;
+import utils.WebElemntMapper;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegisterTest extends GenericSeleniumTest {
+
+    LoginPage loginPage;
+    MainPage mainPage;
+    RegisterPage registerPage;
 
         @Test
         public void registerTest (){
             //1.	Navigate to : https://demo.nopcommerce.com/
             driver.get("https://demo.nopcommerce.com/");
             //2.	Click LogIn - Menu
-            driver.findElement(By.className("ico-login")).click();
+            mainPage = new MainPage(driver);
+            mainPage.clickOnLoginLink();
             //3.	Click  Register - button
-            driver.findElement(By.cssSelector("body > div.master-wrapper-page > div.master-wrapper-content > div > div > div > div.page-body > div.customer-blocks > div.new-wrapper.register-block > div.buttons > button")).click();
+            loginPage = new LoginPage(driver);
+            loginPage.clickOnRegisterButton();
             //4.	Check the title of the page after clicking Register button
             driver.getTitle();
             //5.	Fill the register form as below:
-            driver.findElement(By.id("gender-male")).click();
-            driver.findElement(By.id("FirstName")).sendKeys("Egli");
-            driver.findElement(By.id("LastName")).sendKeys("Isufaj");
+            registerPage = new RegisterPage(driver);
+            registerPage.fillInGenderAsMale();
+            registerPage.fillInMandatoryFields("Egli", "Isufaj", EmailGenerator.generateRandomEmail(),  "Egli1234!@#");
             //Date of birth dropdown???
-            driver.findElement(By.name("DateOfBirthDay")).click();
-            driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[1]/option[8]")).click();
-            driver.findElement(By.name("DateOfBirthMonth")).click();
-            driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[5]")).click();
-            driver.findElement(By.name("DateOfBirthYear")).click();
-            driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[85]")).click();
-            driver.findElement(By.id("Email")).sendKeys("egliisufaj8@gmail.com");
+            registerPage.fillInDateOfBirth(7,4,95);
             driver.findElement(By.id("Company")).sendKeys("Lufthansa Industry Solutions");
             //driver.findElement(By.id("Newsletter"));
-            driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
-            driver.findElement(By.id("ConfirmPassword")).sendKeys("Egli1234!@#");
             driver.findElement(By.id("register-button")).click();
             //6.	Verify that register is successful
             //Should complete registration and asser registration through success message.
@@ -90,7 +91,7 @@ class RegisterTest extends GenericSeleniumTest {
         assertEquals(driver.getTitle(), "Notebooks");
         //4.	Choose 9 on Display dropdown
         driver.findElement(By.id("products-pagesize")).click();
-        driver.findElement(By.xpath(//*[@id="products-pagesize"]/option[3]))
+        driver.findElement(By.xpath("/*[@id=/option[3])")).click();
         //5.	Verify that only 6 items are displayed
                 assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //6.	On Filter by attributes check 16GB
@@ -152,11 +153,21 @@ class RegisterTest extends GenericSeleniumTest {
         //driver.findElement(By.linkText("Update shopping cart"));
         //driver.findElement(By.linkText("Continue shopping"));
         //driver.findElement(By.linkText("Estimate shipping"));
-        assertTrue(driver.findElement(By.id("updatecart"))).isDisplayed();
-        assertTrue(driver.findElement(By.name("continueshopping"))).isDisplayed();
-        assertTrue(driver.findElement(By.id("open-estimate-shipping-popup"))).isDisplayed();
+        assertTrue(driver.findElement(By.id("updatecart")).isDisplayed());
+        assertTrue(driver.findElement(By.name("continueshopping")).isDisplayed());
+        assertTrue(driver.findElement(By.id("open-estimate-shipping-popup")).isDisplayed());
         //6.	Verify that the prices sum for all items is equal to Total Price in the end of the page
-        assertEquals(driver.findElement(By.className("value-summary")), driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[2]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[3]/td[6]/span"))));
+        WebElement valueSummary = driver.findElement(By.className("value-summary"));
+        WebElement displayedValue1 = driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[6]/span"));
+        WebElement displayedValue2 = driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[2]/td[6]/span"));
+        WebElement displayedValue3 = driver.findElement(By.xpath("//*[@id=\\\"shopping-cart-form\\\"]/div[1]/table/tbody/tr[3]/td[6]/span"));
+
+        Integer sumOfAllSales = WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue1) +
+                WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue2) +
+                WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue3);
+
+        assertEquals(WebElemntMapper.webElementWithCurrencyValueToNumber(valueSummary), sumOfAllSales);
+
         //7.	Close the browser
     }
     @Test

@@ -13,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class GenericSeleniumTest {
     protected WebDriver driver = new ChromeDriver();
@@ -26,6 +27,7 @@ public class GenericSeleniumTest {
 
     @AfterEach
     public void afterTest() {
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.quit();
     }
     /*@AfterMethod

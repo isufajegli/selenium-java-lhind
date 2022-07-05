@@ -36,7 +36,7 @@ class RegisterTest extends GenericSeleniumTest {
             driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[5]")).click();
             driver.findElement(By.name("DateOfBirthYear")).click();
             driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option[85]")).click();
-            driver.findElement(By.id("Email")).sendKeys("egliisufaj7@gmail.com");
+            driver.findElement(By.id("Email")).sendKeys("egliisufaj8@gmail.com");
             driver.findElement(By.id("Company")).sendKeys("Lufthansa Industry Solutions");
             //driver.findElement(By.id("Newsletter"));
             driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
@@ -92,21 +92,21 @@ class RegisterTest extends GenericSeleniumTest {
         driver.findElement(By.id("products-pagesize")).click();
         driver.findElement(By.xpath(//*[@id="products-pagesize"]/option[3]))
         //5.	Verify that only 6 items are displayed
-                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]"))).isDisplayed();
+                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //6.	On Filter by attributes check 16GB
                 driver.findElement(By.id("attribute-option-10")).click();
         //7.	Verify that only 1 item is displayed
-                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]"))).isDisplayed();
+                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
         //8.	Uncheck the 16GB checkbox
         driver.findElement(By.id("attribute-option-10")).click();
         //9.	Verify that 6 items are displayed now
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]"))).isDisplayed();
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]"))).isDisplayed();
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]"))).isDisplayed();
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]"))).isDisplayed();
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]"))).isDisplayed();
-        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]"))).isDisplayed();
-        assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]"))).isDisplayed();
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]")).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]")).isDisplayed());
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")).isDisplayed());
+        assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //10.	Add the second and the third item on wishlist
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div[2]/div[3]/div[2]/button[3]")).click();
 
@@ -156,7 +156,7 @@ class RegisterTest extends GenericSeleniumTest {
         assertTrue(driver.findElement(By.name("continueshopping"))).isDisplayed();
         assertTrue(driver.findElement(By.id("open-estimate-shipping-popup"))).isDisplayed();
         //6.	Verify that the prices sum for all items is equal to Total Price in the end of the page
-        assertEquals(driver.findElement(By.className("value-summary"), driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[2]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[3]/td[6]/span"))))
+        assertEquals(driver.findElement(By.className("value-summary")), driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[2]/td[6]/span") + driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[3]/td[6]/span"))));
         //7.	Close the browser
     }
     @Test

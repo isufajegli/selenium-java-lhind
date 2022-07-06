@@ -1,0 +1,19 @@
+
+W
+'src/test/java/pages/RegisterSucess.java,9\6\96fa187abf4d5f724986e439fdc6057fe61589a4
+R
+"src/test/java/pages/LoginPage.java,2\f\2febc867dad266b12f3cf09596e572e0dcf37dbf
+Q
+!src/test/java/pages/MainPage.java,f\4\f41f1c0987a717ab7156381c1879e3277631ba31
+U
+%src/test/java/pages/RegisterPage.java,7\7\77ae34484c8b0b447ecca2d3a8dc03d8f265e415
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+_
+/src/test/java/generics/GenericSeleniumTest.java,0\6\06932ae35e841a3ba61eadb0ac46ef92ddcc3af6
+X
+(src/test/java/utils/WebElemntMapper.java,2\1\21c66ac3a439156d9830877a25ddb950eee9d81f
+W
+'src/test/java/utils/EmailGenerator.java,e\1\e14b23583a7507d45cd368024928772af242b338
+O
+src/test/java/RegisterTest.java,1\0\10eb4760e7572ddc933c9ecf81f8b81d9dd6a7cf

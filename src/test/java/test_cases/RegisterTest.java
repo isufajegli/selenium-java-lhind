@@ -1,20 +1,20 @@
+package test_cases;
+
 import generics.GenericSeleniumTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
-
 import pages.LoginPage;
 import pages.MainPage;
 import pages.RegisterPage;
 import utils.EmailGenerator;
 import utils.WebElemntMapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RegisterTest extends GenericSeleniumTest {
 
@@ -22,46 +22,47 @@ class RegisterTest extends GenericSeleniumTest {
     MainPage mainPage;
     RegisterPage registerPage;
 
-        @Test
-        public void registerTest (){
-            //1.	Navigate to : https://demo.nopcommerce.com/
-            driver.get("https://demo.nopcommerce.com/");
-            //2.	Click LogIn - Menu
-            mainPage = new MainPage(driver);
-            mainPage.clickOnLoginLink();
-            //3.	Click  Register - button
-            loginPage = new LoginPage(driver);
-            loginPage.clickOnRegisterButton();
-            //4.	Check the title of the page after clicking Register button
-            driver.getTitle();
-            //5.	Fill the register form as below:
-            registerPage = new RegisterPage(driver);
-            registerPage.fillInGenderAsMale();
-            registerPage.fillInMandatoryFields("Egli", "Isufaj", EmailGenerator.generateRandomEmail(),  "Egli1234!@#");
-            //Date of birth dropdown???
-            registerPage.fillInDateOfBirth(7,4,95);
-            driver.findElement(By.id("Company")).sendKeys("Lufthansa Industry Solutions");
-            //driver.findElement(By.id("Newsletter"));
-            driver.findElement(By.id("register-button")).click();
-            //6.	Verify that register is successful
-            //Should complete registration and asser registration through success message.
-            //<div class="result">Your registration completed</div>
+    @Test
+    public void registerTest() {
+        //1.	Navigate to : https://demo.nopcommerce.com/
+        driver.get("https://demo.nopcommerce.com/");
+        //2.	Click LogIn - Menu
+        mainPage = new MainPage(driver);
+        mainPage.clickOnLoginLink();
+        //3.	Click  Register - button
+        loginPage = new LoginPage(driver);
+        loginPage.clickOnRegisterButton();
+        //4.	Check the title of the page after clicking Register button
+        Assertions.assertEquals("nopCommerce demo store. Register", driver.getTitle());
+        //5.	Fill the register form as below:
+        registerPage = new RegisterPage(driver);
+        registerPage.fillGender('M');
+        registerPage.fillInMandatoryFields("Egli", "Isufaj", EmailGenerator.generateRandomEmail(), "Egli1234!@#");
+        //Date of birth dropdown???
+        registerPage.fillInDateOfBirth(7, 4, 95);
+        driver.findElement(By.id("Company")).sendKeys("Lufthansa Industry Solutions");
+        //driver.findElement(By.id("Newsletter"));
+        driver.findElement(By.id("register-button")).click();
+        //6.	Verify that register is successful
+        //Should complete registration and asser registration through success message.
+        //<div class="result">Your registration completed</div>
             /*String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText();
             String expectedString = "Your registration completed";
             assertTrue(actualString.contains(expectedString));*/
-            assertEquals(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText(), "Your registration completed");
-            //7.	Click Log out - Menu
-            driver.findElement(By.className("ico-logout")).click();
+        assertEquals(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText(), "Your registration completed");
+        //7.	Click Log out - Menu
+        driver.findElement(By.className("ico-logout")).click();
     }
 
     @Test
-    public void loginTest (){
+    public void loginTest() {
         //1.	Navigate to : https://demo.nopcommerce.com/
         driver.get("https://demo.nopcommerce.com/");
         //2.	Click LogIn - Menu
         driver.findElement(By.className("ico-login")).click();
         //3.	Login with the credentials created from Test 1
-        driver.findElement(By.id("Email")).sendKeys("egliisufaj3@gmail.com");
+        WebElement emailField = driver.findElement(By.id("Email"));
+        emailField.sendKeys("egliisufaj3@gmail.com");
         driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")).click();
         //4.	Verify that login is successful:
@@ -74,10 +75,10 @@ class RegisterTest extends GenericSeleniumTest {
         //5.	Log out
         driver.findElement(By.className("ico-logout")).click();
     }
+
     @Test
-    public void dashboardTest (){
-            //Precondition: Log in nopCommerce Application
-        WebDriver driver = new ChromeDriver();
+    public void dashboardTest() {
+        //Precondition: Log in nopCommerce Application
         driver.get("https://demo.nopcommerce.com/");
         driver.findElement(By.className("ico-login")).click();
         driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
@@ -95,11 +96,11 @@ class RegisterTest extends GenericSeleniumTest {
         driver.findElement(By.id("products-pagesize")).click();
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[1]/div[3]/select/option[3]")).click();
         //5.	Verify that only 6 items are displayed
-                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
+        assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //6.	On Filter by attributes check 16GB
-                driver.findElement(By.id("attribute-option-10")).click();
+        driver.findElement(By.id("attribute-option-10")).click();
         //7.	Verify that only 1 item is displayed
-                assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
+        assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
         //8.	Uncheck the 16GB checkbox
         driver.findElement(By.id("attribute-option-10")).click();
         //9.	Verify that 6 items are displayed now
@@ -146,9 +147,9 @@ class RegisterTest extends GenericSeleniumTest {
         //16.	Close the browser
     }
 
-    @Test
-    public void shoppingCartTest (){
-            //Precondition: Test 3
+    //@Test
+    public void shoppingCartTest() {
+        //Precondition: Test 3
         //1.	Hover over Shopping Cart –Menu
         Actions action = new Actions(driver);
         WebElement ShoppingCart = driver.findElement(By.id("topcartlink"));
@@ -167,9 +168,9 @@ class RegisterTest extends GenericSeleniumTest {
         assertTrue(driver.findElement(By.id("open-estimate-shipping-popup")).isDisplayed());
         //6.	Verify that the prices sum for all items is equal to Total Price in the end of the page
         WebElement valueSummary = driver.findElement(By.className("value-summary"));
-        WebElement displayedValue1 = driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[6]/span"));
-        WebElement displayedValue2 = driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[2]/td[6]/span"));
-        WebElement displayedValue3 = driver.findElement(By.xpath("//*[@id=\\\"shopping-cart-form\\\"]/div[1]/table/tbody/tr[3]/td[6]/span"));
+        WebElement displayedValue1 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[1]/td[6]/span"));
+        WebElement displayedValue2 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[2]/td[6]/span"));
+        WebElement displayedValue3 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[3]/td[6]/span"));
 
         Integer sumOfAllSales = WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue1) +
                 WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue2) +
@@ -179,9 +180,10 @@ class RegisterTest extends GenericSeleniumTest {
 
         //7.	Close the browser
     }
-    @Test
-    public void emptyShoppingCartTest (){
-            // Precondition: Test 3 & Test 4
+
+    //@Test
+    public void emptyShoppingCartTest() {
+        // Precondition: Test 3 & Test 4
         //1.	Delete the first item on shopping cart
         //2.	Verify that the number of elements in Shopping Cart table is decreased by 1
         //driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();

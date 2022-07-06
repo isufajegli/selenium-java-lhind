@@ -60,8 +60,12 @@ public class RegisterPage {
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option["+ (year-10) +"]")).click();
     }
 
-    public void fillInGenderAsMale(){
-        genderMale.click();
+    public void fillGender(char gender){
+        if (gender == 'M') {
+            genderMale.click();
+        } else if (gender == 'F') {
+            //todo: click female button
+        }
 
     }
 

@@ -15,19 +15,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class GenericSeleniumTest {
-    protected WebDriver driver = new ChromeDriver();
-
-    @BeforeAll
-    public static void setup() {
-        WebDriverManager.chromedriver().setup();
-        WebDriverManager.firefoxdriver().setup();
-        WebDriverManager.edgedriver().setup();
-    }
+public class GenericSeleniumTest extends Hooks{
 
     @AfterEach
     public void afterTest() {
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.quit();
     }
     /*@AfterMethod

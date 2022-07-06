@@ -46,9 +46,10 @@ class RegisterTest extends GenericSeleniumTest {
             //6.	Verify that register is successful
             //Should complete registration and asser registration through success message.
             //<div class="result">Your registration completed</div>
-            String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText();
+            /*String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText();
             String expectedString = "Your registration completed";
-            assertTrue(actualString.contains(expectedString));
+            assertTrue(actualString.contains(expectedString));*/
+            assertEquals(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]")).getText(), "Your registration completed");
             //7.	Click Log out - Menu
             driver.findElement(By.className("ico-logout")).click();
     }
@@ -66,9 +67,10 @@ class RegisterTest extends GenericSeleniumTest {
         //4.	Verify that login is successful:
         //-	“Welcome to our store text” - is displayed
         //-	Log out - Menu is displayed
-        String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div/div[2]/div[1]/h2")).getText();
-        assertTrue(actualString.contains("Welcome to our store"));
-        driver.findElement(By.className("ico-logout")).isDisplayed();
+        /*String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div/div[2]/div[1]/h2")).getText();
+        assertTrue(actualString.contains("Welcome to our store"));*/
+        assertEquals(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div/div[2]/div[1]/h2")).getText(), "Welcome to our store");
+        assertTrue(driver.findElement(By.className("ico-logout")).isDisplayed());
         //5.	Log out
         driver.findElement(By.className("ico-logout")).click();
     }
@@ -78,20 +80,20 @@ class RegisterTest extends GenericSeleniumTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://demo.nopcommerce.com/");
         driver.findElement(By.className("ico-login")).click();
-        driver.findElement(By.id("Email")).sendKeys("egliisufaj3@gmail.com");
-        driver.findElement(By.id("Password")).sendKeys("Egli1234!@#");
-        driver.findElement(By.className("button-1 login-button")).click();
+        driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
+        driver.findElement(By.id("Password")).sendKeys("Test1234!");
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")).click();
         //1.	Hover over Computers Menu
         Actions action = new Actions(driver);
-        WebElement Computers = driver.findElement(By.linkText("Computers"));
+        WebElement Computers = driver.findElement(By.partialLinkText("Computers"));
         action.moveToElement(Computers).build().perform();
         //2.	Click Notebooks
-        driver.findElement(By.linkText("Notebooks")).click();
+        driver.findElement(By.partialLinkText("Notebooks")).click();
         //3.	Verify that we have navigate to Notebooks Page
         assertEquals(driver.getTitle(), "Notebooks");
         //4.	Choose 9 on Display dropdown
         driver.findElement(By.id("products-pagesize")).click();
-        driver.findElement(By.xpath("/*[@id=/option[3])")).click();
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[1]/div[3]/select/option[3]")).click();
         //5.	Verify that only 6 items are displayed
                 assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //6.	On Filter by attributes check 16GB
@@ -109,29 +111,38 @@ class RegisterTest extends GenericSeleniumTest {
         assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")).isDisplayed());
         assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         //10.	Add the second and the third item on wishlist
+        //11.	Verify that after every item added a notification with text : The product has been added to your wishlist – is displayed
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div[2]/div[3]/div[2]/button[3]")).click();
+        assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your wishlist");
+        driver.findElement(By.className("close")).click();
 
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]/div/div[2]/div[3]/div[2]/button[3]")).click();
-
-        //11.	Verify that after every item added a notification with text : The product has been added to your wishlist – is displayed
-
+        assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your wishlist");
+        driver.findElement(By.className("close")).click();
         //12.	Add the fourth, fifth and sixth item on Shopping Cart
+        //13.	Verify that after every item added a notification with text : The product has been added to your shopping cart
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[4]/div/div[2]/div[3]/div[2]/button[1]")).click();
-        //
+        assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
+        driver.findElement(By.className("close")).click();
+
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]/div/div[2]/div[3]/div[2]/button[1]")).click();
+        assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
+        driver.findElement(By.className("close")).click();
 
         driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]/div/div[2]/div[3]/div[2]/button[1])")).click();
-
-        //13.	Verify that after every item added a notification with text : The product has been added to your shopping cart
+        assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
+        driver.findElement(By.className("close")).click();
 
         //14.	Verify that Wishlist on Menu bar displays 2
-        String actualStringWishlist = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
+        /*String actualStringWishlist = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
         String expectedStringWishlist = "(2)";
-        assertTrue(actualStringWishlist.contains(expectedStringWishlist));
+        assertTrue(actualStringWishlist.contains(expectedStringWishlist));*/
+        assertEquals(driver.findElement(By.className("wishlist-qty")).getText(), "(2)");
         //15.	Verify that Shopping Cart on Menu bar displays 3
-        String actualStringShoppingCart = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
+        /*String actualStringShoppingCart = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
         String expectedStringShoppingCart = "(3)";
-        assertTrue(actualStringShoppingCart.contains(expectedStringShoppingCart));
+        assertTrue(actualStringShoppingCart.contains(expectedStringShoppingCart));*/
+        assertEquals(driver.findElement(By.className("cart-qty")).getText(), "(3)");
         //16.	Close the browser
     }
 
@@ -140,19 +151,17 @@ class RegisterTest extends GenericSeleniumTest {
             //Precondition: Test 3
         //1.	Hover over Shopping Cart –Menu
         Actions action = new Actions(driver);
-        WebElement ShoppingCart = driver.findElement(By.linkText("Shopping cart"));
+        WebElement ShoppingCart = driver.findElement(By.id("topcartlink"));
         action.moveToElement(ShoppingCart).build().perform();
         //2.	Verify that ‘Go To Cart’ – button is displayed
-        //driver.findElement();
+        assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).isDisplayed());
         //3.	Click ‘Go To Cart’ – button
-        driver.findElement(By.linkText("Go to cart")).click();
+        driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).click();
         //4.	Verify that we have navigate to Shopping Cart Page
-        String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[1]/h1")).getText();
-        assertTrue(actualString.contains("Shopping cart"));
+        //String actualString = driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[1]/h1")).getText();
+        //assertTrue(actualString.contains("Shopping cart"));
+        assertEquals(driver.getTitle(), "Shopping cart");
         //5.	Verify that following buttons are displayed
-        //driver.findElement(By.linkText("Update shopping cart"));
-        //driver.findElement(By.linkText("Continue shopping"));
-        //driver.findElement(By.linkText("Estimate shipping"));
         assertTrue(driver.findElement(By.id("updatecart")).isDisplayed());
         assertTrue(driver.findElement(By.name("continueshopping")).isDisplayed());
         assertTrue(driver.findElement(By.id("open-estimate-shipping-popup")).isDisplayed());
@@ -174,26 +183,35 @@ class RegisterTest extends GenericSeleniumTest {
     public void emptyShoppingCartTest (){
             // Precondition: Test 3 & Test 4
         //1.	Delete the first item on shopping cart
-        driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
         //2.	Verify that the number of elements in Shopping Cart table is decreased by 1
-        String actualStringShoppingCartTwoProducts = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
-        String expectedStringShoppingCartTwoProducts = "(2)";
-        assertTrue(actualStringShoppingCartTwoProducts.contains(expectedStringShoppingCartTwoProducts));
-        //3.	Repeat steps 1&2 until the last item is deleted
-        driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
-        String actualStringShoppingCartOneProduct = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
-        String expectedStringShoppingCartOneProduct = "(1)";
-        assertTrue(actualStringShoppingCartOneProduct.contains(expectedStringShoppingCartOneProduct));
+        //driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        //String actualStringShoppingCartTwoProducts = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
+        //String expectedStringShoppingCartTwoProducts = "(2)";
+        //assertTrue(actualStringShoppingCartTwoProducts.contains(expectedStringShoppingCartTwoProducts));
 
-        driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
-        String actualStringShoppingCartZeroProducts = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
-        String expectedStringShoppingCartZeroProducts = "(0)";
-        assertTrue(actualStringShoppingCartZeroProducts.contains(expectedStringShoppingCartZeroProducts));
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div/form/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        assertEquals(driver.findElement(By.className("cart-qty")).getText(), "(2)");
+        //3.	Repeat steps 1&2 until the last item is deleted
+        //driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        //String actualStringShoppingCartOneProduct = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
+        //String expectedStringShoppingCartOneProduct = "(1)";
+        //assertTrue(actualStringShoppingCartOneProduct.contains(expectedStringShoppingCartOneProduct));
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div/form/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        assertEquals(driver.findElement(By.className("cart-qty")).getText(), "(1)");
+        //driver.findElement(By.xpath("//*[@id=\"shopping-cart-form\"]/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        //String actualStringShoppingCartZeroProducts = driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[1]/ul/li[3]/a/span[2]")).getText();
+        //String expectedStringShoppingCartZeroProducts = "(0)";
+        //assertTrue(actualStringShoppingCartZeroProducts.contains(expectedStringShoppingCartZeroProducts));
+        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div/form/div[1]/table/tbody/tr[1]/td[7]/button")).click();
+        assertEquals(driver.findElement(By.className("cart-qty")).getText(), "(0)");
         //4.	Verify that Shopping Cart is empty
         /*Actions action = new Actions(driver);
         WebElement ShoppingCart = driver.findElement(By.className("ico-cart"));
         action.moveToElement(ShoppingCart).build().perform();*/
         //"You have no items in your shopping cart." "//*[@id=\"flyout-cart\"]/div/div"
+        assertTrue(driver.findElement(By.className("no-data")).isDisplayed());
+        assertEquals(driver.findElement(By.className("no-data")).getText(), "Your Shopping Cart is empty!");
+
         //5.	Close the browser
     }
 }

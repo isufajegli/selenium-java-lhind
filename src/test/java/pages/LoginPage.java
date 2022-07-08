@@ -12,7 +12,13 @@ public class LoginPage {
     @FindBy(css = "button.button-1.register-button")
     WebElement loginRegisterButton;
 
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")
+    @FindBy(id = "Email")
+    WebElement email;
+
+    @FindBy(id = "Password")
+    WebElement password;
+
+    @FindBy(css = "button.button-1.login-button")
     WebElement loginButton;
 
     public LoginPage(WebDriver driver) {
@@ -23,4 +29,11 @@ public class LoginPage {
     public void clickOnRegisterButton(){
         loginRegisterButton.click();
     }
+
+    public void login(String username, String password){
+        this.email.sendKeys(username);
+        this.password.sendKeys(password);
+        loginButton.click();
+    }
+
 }

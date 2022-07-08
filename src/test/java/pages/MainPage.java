@@ -12,6 +12,12 @@ public class MainPage {
     @FindBy(className = "ico-login")
     WebElement login;
 
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div/div/div/div[2]/div[1]/h2")
+    WebElement welcomeLabel;
+
+    @FindBy(className = "ico-logout")
+    WebElement logout;
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -19,5 +25,17 @@ public class MainPage {
 
     public void clickOnLoginLink(){
         login.click();
+    }
+
+    public boolean logoutIsVisible(){
+        return logout.isDisplayed();
+    }
+
+    public void logout(){
+        logout.click();
+    }
+
+    public String getWelcomeMessage(){
+        return  welcomeLabel.getText();
     }
 }

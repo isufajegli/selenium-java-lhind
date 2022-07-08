@@ -1,0 +1,9 @@
+generics\Hooks.class
+generics\GenericSeleniumTest.class
+utils\WebElemntMapper.class
+pages\LoginPage.class
+selenium\tests\RegisterTest.class
+pages\RegisterPage.class
+pages\RegisterSucess.class
+utils\EmailGenerator.class
+pages\MainPage.class

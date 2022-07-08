@@ -19,7 +19,7 @@ public class GenericSeleniumTest extends Hooks{
 
     @AfterEach
     public void afterTest() {
-        driver.quit();
+        //driver.quit();
     }
     /*@AfterMethod
     public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
@@ -29,5 +29,4 @@ public class GenericSeleniumTest extends Hooks{
             FileUtils.copyFile(scrFile, new File("errorScreenshots\\" + testResult.getName() + "-"
                     + Arrays.toString(testResult.getParameters()) +  ".jpg"));
         }*/
-    }
-
+}

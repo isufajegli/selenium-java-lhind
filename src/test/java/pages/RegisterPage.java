@@ -1,10 +1,10 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 public class RegisterPage {
 
@@ -28,19 +28,32 @@ public class RegisterPage {
     @FindBy(id = "gender-male")
     WebElement genderMale;
 
-    @FindBy(id = "gender-male")
-    WebElement dateOfBirthDay;
+    @FindBy(name = "DateOfBirthDay")
+    WebElement  dateOfBirthDay;
 
-    @FindBy(id = "gender-male")
-    WebElement dateOfBirthMonth;
+    @FindBy(name = "DateOfBirthMonth")
+    WebElement  dateOfBirthMonth;
 
-    @FindBy(id = "gender-male")
-    WebElement dateOfBirthYear;
+    @FindBy(name = "DateOfBirthYear")
+    WebElement  dateOfBirthYear;
+
+    @FindBy(id = "Company")
+    WebElement company;
+
+    @FindBy(id = "register-button")
+    WebElement registerButton;
+
+    Select dateOfBirthYearSelect;
+    Select dateOfBirthMonthSelect;
+    Select dateOfBirthDaySelect;
 
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        dateOfBirthYearSelect = new Select(dateOfBirthYear);
+        dateOfBirthMonthSelect= new Select(dateOfBirthMonth);
+        dateOfBirthDaySelect = new Select(dateOfBirthDay);
     }
 
     public void fillInMandatoryFields(String firstName, String lastName, String email, String password){
@@ -52,28 +65,20 @@ public class RegisterPage {
     }
 
     public void fillInDateOfBirth(Integer day, Integer month, Integer year){
-        dateOfBirthDay.click();
-        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[1]/option[" + (day+1) + "]")).click();
-        dateOfBirthMonth.click();
-        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[2]/option[" + (month+1) +"]")).click();
-        dateOfBirthYear.click();
-        driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/form/div[1]/div[2]/div[4]/div/select[3]/option["+ (year-10) +"]")).click();
+        dateOfBirthDaySelect.selectByIndex(day+1);
+        dateOfBirthMonthSelect.selectByIndex(month+1);
+        dateOfBirthYearSelect.selectByIndex(year+10);
     }
 
-    public void fillGender(char gender){
-        if (gender == 'M') {
-            genderMale.click();
-        } else if (gender == 'F') {
-            //todo: click female button
-        }
-
+    public void fillInGenderAsMale(){
+        genderMale.click();
     }
 
-    public void fillInCompany(){
-
+    public void fillInCompany(String company){
+        this.company.sendKeys(company);
     }
 
     public void clickRegisterButton(){
-
+        registerButton.click();
     }
 }

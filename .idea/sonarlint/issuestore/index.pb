@@ -15,5 +15,5 @@ X
 (src/test/java/utils/WebElemntMapper.java,2\1\21c66ac3a439156d9830877a25ddb950eee9d81f
 W
 'src/test/java/utils/EmailGenerator.java,e\1\e14b23583a7507d45cd368024928772af242b338
-O
-src/test/java/RegisterTest.java,1\0\10eb4760e7572ddc933c9ecf81f8b81d9dd6a7cf
+^
+.src/test/java/selenium/tests/RegisterTest.java,c\7\c731558355050245d198ccc413ea3f53fa0fa2c9

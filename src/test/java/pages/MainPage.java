@@ -18,6 +18,12 @@ public class MainPage {
     @FindBy(className = "ico-logout")
     WebElement logout;
 
+    @FindBy(partialLinkText = "Computers")
+    WebElement computersMenu;
+
+    @FindBy(partialLinkText = "Notebooks")
+    WebElement notebooksMenu;
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -37,5 +43,12 @@ public class MainPage {
 
     public String getWelcomeMessage(){
         return  welcomeLabel.getText();
+    }
+
+    public void hoverOverComputersMenu(){
+        //computersMenu.build().perform();
+    }
+    public void clickNotebooksMenu(){
+        notebooksMenu.click();
     }
 }

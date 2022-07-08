@@ -26,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Epic("Login Tests Epic")
-@Feature("Invalid Login Features")
+@Epic("Selenium + Java - Miniproject")
+@Feature("nopCommerce Test Scenarios")
 class RegisterTest extends GenericSeleniumTest {
 
     LoginPage loginPage;
@@ -45,7 +45,7 @@ class RegisterTest extends GenericSeleniumTest {
         @Test
         @Order(1)
         @Step
-        @Description("Invalid Login Test with Invalid Username and Invalid Password.")
+        @Description("Register Test")
         public void registerTest (){
             //1.	Navigate to : https://demo.nopcommerce.com/
             driver.get("https://demo.nopcommerce.com/");
@@ -78,7 +78,7 @@ class RegisterTest extends GenericSeleniumTest {
     @Test
     @Step
     @Order(2)
-    @Description("Invalid Login Test with Empty Username and Invalid Password.")
+    @Description("Login Test")
     public void loginTest (){
         //1.	Navigate to : https://demo.nopcommerce.com/
         driver.get("https://demo.nopcommerce.com/");
@@ -97,7 +97,7 @@ class RegisterTest extends GenericSeleniumTest {
 
     //@Test
     @Order(3)
-    @Description("This is a Fail Story Description.")
+    @Description("Dashboard Test")
     public void dashboardTest() {
         //Precondition: Log in nopCommerce Application
         driver.get("https://demo.nopcommerce.com/");
@@ -164,6 +164,8 @@ class RegisterTest extends GenericSeleniumTest {
     }
 
     //@Test
+    @Order(4)
+    @Description("Shopping Cart Test")
     public void shoppingCartTest() {
         //Precondition: Test 3
         //1.	Hover over Shopping Cart –Menu
@@ -175,7 +177,7 @@ class RegisterTest extends GenericSeleniumTest {
         //3.	Click ‘Go To Cart’ – button
         driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).click();
         //4.	Verify that we have navigate to Shopping Cart Page
-        assertEquals(driver.getTitle(), "nopCommerce demo store. Shopping cart");
+        assertEquals(driver.getTitle(), "nopCommerce demo store. Shopping Cart");
         //5.	Verify that following buttons are displayed
         assertTrue(driver.findElement(By.id("updatecart")).isDisplayed());
         assertTrue(driver.findElement(By.name("continueshopping")).isDisplayed());
@@ -195,6 +197,8 @@ class RegisterTest extends GenericSeleniumTest {
     }
 
     //@Test
+    @Order(5)
+    @Description("Empty Shopping Cart Test")
     public void emptyShoppingCartTest() {
         // Precondition: Test 3 & Test 4
         //1.	Delete the first item on shopping cart

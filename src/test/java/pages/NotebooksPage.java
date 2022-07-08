@@ -31,6 +31,40 @@ public class NotebooksPage {
     @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]/div/div[2]/div[3]/div[2]/button[1]")
     WebElement sixthItemAddToCartButton;
 
+    @FindBy(className = "content")
+    WebElement wishlistSuccessNotification;
+
+    @FindBy(className = "close")
+    WebElement wishlistSuccessNotificationCloseButton;
+
+    @FindBy(className = "content")
+    WebElement shoppingCartSuccessNotification;
+
+    @FindBy(className = "close")
+    WebElement shoppingCartSuccessNotificationCloseButton;
+
+    @FindBy(className = "wishlist-qty")
+    WebElement wishlistItemQuantityOnMenuBar;
+
+    @FindBy(className = "cart-qty")
+    WebElement shoppingCartItemQuantityOnMenuBar;
+
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]")
+    WebElement itemOne;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")
+    WebElement itemTwo;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")
+    WebElement itemThree;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[4]")
+    WebElement itemFour;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]")
+    WebElement itemFive;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")
+    WebElement itemSix;
+    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")
+    WebElement itemSeven;
+
+
     public NotebooksPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -67,5 +101,43 @@ public class NotebooksPage {
     public void clickSixthItemAddToCartButton(){
         sixthItemAddToCartButton.click();
     }
-
+    public String checkWishlistSuccessNotification(){
+        wishlistSuccessNotification.getText();
+    }
+    public void clickWishlistSuccessNotificationCloseButton(){
+        wishlistSuccessNotificationCloseButton.click();
+    }
+    public String checkShoppingCartSuccessNotification() {
+        shoppingCartSuccessNotification.getText();
+    }
+    public void clickShoppingCartSuccessNotificationCloseButton(){
+        shoppingCartSuccessNotificationCloseButton.click();
+    }
+    public String checkWishlistItemQuantityOnMenuBar(){
+        wishlistItemQuantityOnMenuBar.getText();
+    }
+    public String checkShoppingCartItemQuantityOnMenuBar(){
+        shoppingCartItemQuantityOnMenuBar.getText();
+    }
+    public boolean itemOneIsVisible(){
+        return itemOne.isDisplayed();
+    }
+    public boolean itemTwoIsVisible(){
+        return itemTwo.isDisplayed();
+    }
+    public boolean itemThreeIsVisible(){
+        return itemThree.isDisplayed();
+    }
+    public boolean itemFourIsVisible(){
+        return itemFour.isDisplayed();
+    }
+    public boolean itemFiveIsVisible(){
+        return itemFive.isDisplayed();
+    }
+    public boolean itemSixIsVisible(){
+        return itemSix.isDisplayed();
+    }
+    public boolean itemSevenIsVisible(){
+        return itemSeven.isDisplayed();
+    }
 }

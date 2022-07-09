@@ -10,6 +10,17 @@ public class ShoppingCartPage {
 
     @FindBy(xpath = "/html/body/div[6]/div[3]/div/div/div/div[2]/div/form/div[1]/table/tbody/tr[1]/td[7]/button")
     WebElement firstItemFromShoppingCartDeleteButton;
+    @FindBy(id = "updatecart")
+    WebElement updateShoppingCartButton;
+
+    @FindBy(name = "continueshopping")
+    WebElement continueShoppingButton;
+
+    @FindBy(id = "open-estimate-shipping-popup")
+    WebElement estimateShippingButton;
+
+    @FindBy(className = "no-data")
+    WebElement noProductsInShoppingCart;
 
     public ShoppingCartPage(WebDriver driver) {
         this.driver = driver;
@@ -17,5 +28,20 @@ public class ShoppingCartPage {
 }
     public void clickFirstItemFromShoppingCartDeleteButton(){
         firstItemFromShoppingCartDeleteButton.click();
+    }
+    public boolean updateShoppingCartButtonIsVisible(){
+        return updateShoppingCartButton.isDisplayed();
+    }
+    public boolean continueShoppingButtonIsVisible(){
+        return continueShoppingButton.isDisplayed();
+    }
+    public boolean estimateShippingButtonIsVisible(){
+        return estimateShippingButton.isDisplayed();
+    }
+    public boolean noProductsInShoppingCartIsVisible(){
+        return noProductsInShoppingCart.isDisplayed();
+    }
+    public void checkNoProductsInShoppingCart(){
+        noProductsInShoppingCart.getText();
     }
 }

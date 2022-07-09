@@ -64,6 +64,9 @@ public class NotebooksPage {
     @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")
     WebElement itemSeven;
 
+    @FindBy(xpath = "/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")
+    WebElement goToCartButton;
+
 
     public NotebooksPage(WebDriver driver) {
         this.driver = driver;
@@ -102,22 +105,22 @@ public class NotebooksPage {
         sixthItemAddToCartButton.click();
     }
     public String checkWishlistSuccessNotification(){
-        wishlistSuccessNotification.getText();
+        return wishlistSuccessNotification.getText();
     }
     public void clickWishlistSuccessNotificationCloseButton(){
         wishlistSuccessNotificationCloseButton.click();
     }
     public String checkShoppingCartSuccessNotification() {
-        shoppingCartSuccessNotification.getText();
+        return shoppingCartSuccessNotification.getText();
     }
     public void clickShoppingCartSuccessNotificationCloseButton(){
         shoppingCartSuccessNotificationCloseButton.click();
     }
     public String checkWishlistItemQuantityOnMenuBar(){
-        wishlistItemQuantityOnMenuBar.getText();
+        return wishlistItemQuantityOnMenuBar.getText();
     }
     public String checkShoppingCartItemQuantityOnMenuBar(){
-        shoppingCartItemQuantityOnMenuBar.getText();
+        return shoppingCartItemQuantityOnMenuBar.getText();
     }
     public boolean itemOneIsVisible(){
         return itemOne.isDisplayed();
@@ -139,5 +142,11 @@ public class NotebooksPage {
     }
     public boolean itemSevenIsVisible(){
         return itemSeven.isDisplayed();
+    }
+    public boolean goToCartButtonIsVisible(){
+        return goToCartButton.isDisplayed();
+    }
+    public void clickGoToCartButton(){
+        goToCartButton.click();
     }
 }

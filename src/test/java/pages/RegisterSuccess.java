@@ -12,9 +12,6 @@ public class RegisterSuccess {
     @FindBy(className = "result")
     WebElement resultLabel;
 
-    //@FindBy(className = "ico-logout")
-    //WebElement logoutMenuButton;
-
     public RegisterSuccess(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

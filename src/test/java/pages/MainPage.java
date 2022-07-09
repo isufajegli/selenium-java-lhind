@@ -20,15 +20,17 @@ public class MainPage {
     @FindBy(className = "ico-logout")
     WebElement logout;
 
-    @FindBy(partialLinkText = "Computers")
+    @FindBy(xpath = "/html/body/div[6]/div[2]/ul[1]/li[1]/a")
     WebElement computersMenu;
 
-    @FindBy(partialLinkText = "Notebooks")
+    @FindBy(xpath = "/html/body/div[6]/div[2]/ul[1]/li[1]/ul/li[2]/a")
     WebElement notebooksMenu;
 
+    Actions action;
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        action = new Actions(driver);
     }
 
     public void clickOnLoginLink(){
@@ -48,9 +50,12 @@ public class MainPage {
     }
 
     public void hoverOverComputersMenu(){
-        //computersMenu.build().perform();
+        action.moveToElement(computersMenu);
+        action.moveToElement(notebooksMenu);
+        action.click().build().perform();
     }
     public void clickNotebooksMenu(){
         notebooksMenu.click();
     }
+
 }

@@ -41,7 +41,7 @@ public class ShoppingCartPage {
     public boolean noProductsInShoppingCartIsVisible(){
         return noProductsInShoppingCart.isDisplayed();
     }
-    public void checkNoProductsInShoppingCart(){
-        noProductsInShoppingCart.getText();
+    public String checkNoProductsInShoppingCart(){
+         return noProductsInShoppingCart.getText();
     }
 }

@@ -18,6 +18,8 @@ import pages.*;
 import utils.EmailGenerator;
 import utils.WebElemntMapper;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -107,31 +109,39 @@ class RegisterTest extends GenericSeleniumTest {
         //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")).click();
 
         //1.	Hover over Computers Menu
+        // 2.	Click Notebooks
         //Actions action = new Actions(driver);
         //WebElement Computers = driver.findElement(By.partialLinkText("Computers"));
         //action.moveToElement(Computers).build().perform();
-        //2.	Click Notebooks
+        driver.get("https://demo.nopcommerce.com/");
+        mainPage = new MainPage(driver);
+        mainPage.hoverOverComputersMenu();
+
         //driver.findElement(By.partialLinkText("Notebooks")).click();
-        mainPage.clickNotebooksMenu();
+        //mainPage.clickNotebooksMenu();
         //3.	Verify that we have navigate to Notebooks Page
         notebooksPage = new NotebooksPage(driver);
         assertEquals(driver.getTitle(), "nopCommerce demo store. Notebooks");
         //4.	Choose 9 on Display dropdown
         //driver.findElement(By.id("products-pagesize")).click();
         //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[1]/div[3]/select/option[3]")).click();
-
+        notebooksPage.clickOnProductsPageSize();
         notebooksPage.clickOnNineItems();
         //5.	Verify that only 6 items are displayed
         //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
         assertTrue(notebooksPage.itemSixIsVisible());
-        assertFalse(notebooksPage.itemSevenIsVisible());
+        assertFalse(notebooksPage.checkIfItemIsVisible(7));
         //6.	On Filter by attributes check 16GB
         //driver.findElement(By.id("attribute-option-10")).click();
+
         notebooksPage.clickOnMemory16GB();
         //7.	Verify that only 1 item is displayed
         //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
         assertTrue(notebooksPage.itemOneIsVisible());
-        assertFalse(notebooksPage.itemTwoIsVisible());
+        //seleniumwait method
+        //wait.withTimeout(5000, TimeUnit.MILLISECONDS);
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        assertFalse(notebooksPage.checkIfItemIsVisible(2));
         //8.	Uncheck the 16GB checkbox
         //driver.findElement(By.id("attribute-option-10")).click();
         notebooksPage.clickOnMemory16GB();
@@ -143,16 +153,15 @@ class RegisterTest extends GenericSeleniumTest {
         //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]")).isDisplayed());
         //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")).isDisplayed());
         //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
-        assertTrue(notebooksPage.itemSixIsVisible());
-        assertFalse(notebooksPage.itemSevenIsVisible());
-        //or
+
         assertTrue(notebooksPage.itemOneIsVisible());
         assertTrue(notebooksPage.itemTwoIsVisible());
         assertTrue(notebooksPage.itemThreeIsVisible());
         assertTrue(notebooksPage.itemFourIsVisible());
         assertTrue(notebooksPage.itemFiveIsVisible());
         assertTrue(notebooksPage.itemSixIsVisible());
-        assertFalse(notebooksPage.itemSevenIsVisible());
+        assertFalse(notebooksPage.checkIfItemIsVisible(7));
+
         //10.	Add the second and the third item on wishlist
         //11.	Verify that after every item added a notification with text : The product has been added to your wishlist – is displayed
         //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div[2]/div[3]/div[2]/button[3]")).click();
@@ -208,15 +217,16 @@ class RegisterTest extends GenericSeleniumTest {
     public void shoppingCartTest() {
         //Precondition: Test 3
         //1.	Hover over Shopping Cart –Menu
+        //2.	Verify that ‘Go To Cart’ – button is displayed
+        //3.	Click ‘Go To Cart’ – button
         //Actions action = new Actions(driver);
         //WebElement ShoppingCart = driver.findElement(By.id("topcartlink"));
         //action.moveToElement(ShoppingCart).build().perform();
-        //2.	Verify that ‘Go To Cart’ – button is displayed
         //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).isDisplayed());
-        assertTrue(notebooksPage.goToCartButtonIsVisible());
-        //3.	Click ‘Go To Cart’ – button
         //driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).click();
-        notebooksPage.clickGoToCartButton();
+        //notebooksPage.clickGoToCartButton();
+        notebooksPage.hoverOverShoppingCartMenu();
+        assertTrue(notebooksPage.goToCartButtonIsVisible());
         //4.	Verify that we have navigate to Shopping Cart Page
         //assertEquals(driver.getTitle(), "nopCommerce demo store. Shopping Cart");
         shoppingCartPage = new ShoppingCartPage(driver);
@@ -229,7 +239,7 @@ class RegisterTest extends GenericSeleniumTest {
         assertTrue(shoppingCartPage.continueShoppingButtonIsVisible());
         assertTrue(shoppingCartPage.estimateShippingButtonIsVisible());
         //6.	Verify that the prices sum for all items is equal to Total Price in the end of the page
-        /*WebElement valueSummary = driver.findElement(By.className("value-summary"));
+        WebElement valueSummary = driver.findElement(By.className("value-summary"));
         WebElement displayedValue1 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[1]/td[6]/span"));
         WebElement displayedValue2 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[2]/td[6]/span"));
         WebElement displayedValue3 = driver.findElement(By.xpath("//*[@id='shopping-cart-form']/div[1]/table/tbody/tr[3]/td[6]/span"));
@@ -238,7 +248,7 @@ class RegisterTest extends GenericSeleniumTest {
                 WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue2) +
                 WebElemntMapper.webElementWithCurrencyValueToNumber(displayedValue3);
 
-        assertEquals(WebElemntMapper.webElementWithCurrencyValueToNumber(valueSummary), sumOfAllSales);*/
+        assertEquals(WebElemntMapper.webElementWithCurrencyValueToNumber(valueSummary), sumOfAllSales);
         //7.	Close the browser
     }
 
@@ -262,7 +272,7 @@ class RegisterTest extends GenericSeleniumTest {
         shoppingCartPage.clickFirstItemFromShoppingCartDeleteButton();
         assertEquals(notebooksPage.checkShoppingCartItemQuantityOnMenuBar(), "(1)");
         shoppingCartPage.clickFirstItemFromShoppingCartDeleteButton();
-        assertEquals(notebooksPage.checkShoppingCartItemQuantityOnMenuBar(), "(0)";
+        assertEquals(notebooksPage.checkShoppingCartItemQuantityOnMenuBar(), "(0)");
         //4.	Verify that Shopping Cart is empty
         //assertTrue(driver.findElement(By.className("no-data")).isDisplayed());
         //assertEquals(driver.findElement(By.className("no-data")).getText(), "Your Shopping Cart is empty!");

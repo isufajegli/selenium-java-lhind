@@ -30,7 +30,7 @@ public class Hooks {
     //wait.until(ExpectedCondition.visibilityOfElementLocated(By.linkText(""));
 
     @AfterAll
-    public void afterTest() {
+    public static void afterTest() {
         driver.quit();
     }
 }

@@ -17,10 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 public class GenericSeleniumTest extends Hooks{
 
-    @AfterEach
-    public void afterTest() {
-        //driver.quit();
-    }
     /*@AfterMethod
     public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
         if (testResult.getStatus() == ITestResult.FAILURE) {

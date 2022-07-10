@@ -14,6 +14,8 @@ import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
 import utils.EmailGenerator;
 import utils.WebElemntMapper;
@@ -72,8 +74,6 @@ class RegisterTest extends GenericSeleniumTest {
             registerSuccess = new RegisterSuccess(driver);
             assertEquals(expectedResult, registerSuccess.returnResultMessage());
             //7.	Click Log out - Menu
-            // todo no such thing investigate
-            //driver.findElement(By.className("ico-logout")).click();
             mainPage.logout();
     }
 
@@ -94,26 +94,20 @@ class RegisterTest extends GenericSeleniumTest {
         assertEquals(mainPage.getWelcomeMessage(), "Welcome to our store");
         assertTrue(mainPage.logoutIsVisible());
         //5.	Log out
-        mainPage.logout();
+        //mainPage.logout();
     }
 
     @Test
     @Order(3)
     @Description("Dashboard Test")
-    public void dashboardTest() {
-        //Precondition: Log in nopCommerce Application
-        //driver.get("https://demo.nopcommerce.com/");
-        //driver.findElement(By.className("ico-login")).click();
-        //driver.findElement(By.id("Email")).sendKeys("egliisufaj@gmail.com");
-        //driver.findElement(By.id("Password")).sendKeys("Test1234!");
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div/div/div[2]/div[1]/div[2]/form/div[3]/button")).click();
+    public void dashboardTest() throws InterruptedException {
 
         //1.	Hover over Computers Menu
         // 2.	Click Notebooks
-        //Actions action = new Actions(driver);
-        //WebElement Computers = driver.findElement(By.partialLinkText("Computers"));
-        //action.moveToElement(Computers).build().perform();
+
         driver.get("https://demo.nopcommerce.com/");
+        driver.manage().window().maximize();
+
         mainPage = new MainPage(driver);
         mainPage.hoverOverComputersMenu();
 
@@ -121,100 +115,74 @@ class RegisterTest extends GenericSeleniumTest {
         //mainPage.clickNotebooksMenu();
         //3.	Verify that we have navigate to Notebooks Page
         notebooksPage = new NotebooksPage(driver);
+        System.out.println(notebooksPage.getSizeOfProductsDisplayed());
         assertEquals(driver.getTitle(), "nopCommerce demo store. Notebooks");
         //4.	Choose 9 on Display dropdown
-        //driver.findElement(By.id("products-pagesize")).click();
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[1]/div[3]/select/option[3]")).click();
         notebooksPage.clickOnProductsPageSize();
         notebooksPage.clickOnNineItems();
         //5.	Verify that only 6 items are displayed
-        //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
-        assertTrue(notebooksPage.itemSixIsVisible());
-        assertFalse(notebooksPage.checkIfItemIsVisible(7));
+        assertEquals(6, notebooksPage.getSizeOfProductsDisplayed());
         //6.	On Filter by attributes check 16GB
-        //driver.findElement(By.id("attribute-option-10")).click();
 
         notebooksPage.clickOnMemory16GB();
         //7.	Verify that only 1 item is displayed
         //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
-        assertTrue(notebooksPage.itemOneIsVisible());
         //seleniumwait method
         //wait.withTimeout(5000, TimeUnit.MILLISECONDS);
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        assertFalse(notebooksPage.checkIfItemIsVisible(2));
+        WebDriverWait wait = new WebDriverWait(driver,30);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")));
+        assertEquals(1, notebooksPage.getSizeOfProductsDisplayed());
+
         //8.	Uncheck the 16GB checkbox
         //driver.findElement(By.id("attribute-option-10")).click();
         notebooksPage.clickOnMemory16GB();
         //9.	Verify that 6 items are displayed now
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]")).isDisplayed());
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")).isDisplayed());
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")).isDisplayed());
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")).isDisplayed());
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]")).isDisplayed());
-        //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")).isDisplayed());
-        //assertFalse(driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[7]")).isDisplayed());
 
-        assertTrue(notebooksPage.itemOneIsVisible());
-        assertTrue(notebooksPage.itemTwoIsVisible());
-        assertTrue(notebooksPage.itemThreeIsVisible());
-        assertTrue(notebooksPage.itemFourIsVisible());
-        assertTrue(notebooksPage.itemFiveIsVisible());
-        assertTrue(notebooksPage.itemSixIsVisible());
-        assertFalse(notebooksPage.checkIfItemIsVisible(7));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")));
+        assertEquals(6, notebooksPage.getSizeOfProductsDisplayed());
 
         //10.	Add the second and the third item on wishlist
         //11.	Verify that after every item added a notification with text : The product has been added to your wishlist – is displayed
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]/div/div[2]/div[3]/div[2]/button[3]")).click();
-        //assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your wishlist");
-        //driver.findElement(By.className("close")).click();
 
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]/div/div[2]/div[3]/div[2]/button[3]")).click();
-        //assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your wishlist");
         //driver.findElement(By.className("close")).click();
         notebooksPage.clickSecondItemAddToWishlistButton();
         assertEquals(notebooksPage.checkWishlistSuccessNotification(), "The product has been added to your wishlist");
-        notebooksPage.clickWishlistSuccessNotificationCloseButton();
+        notebooksPage.clickSuccessNotificationCloseButton();
 
         notebooksPage.clickThirdItemAddToWishlistButton();
         assertEquals(notebooksPage.checkWishlistSuccessNotification(), "The product has been added to your wishlist");
-        notebooksPage.clickWishlistSuccessNotificationCloseButton();
+        notebooksPage.clickSuccessNotificationCloseButton();
         //12.	Add the fourth, fifth and sixth item on Shopping Cart
         //13.	Verify that after every item added a notification with text : The product has been added to your shopping cart
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[4]/div/div[2]/div[3]/div[2]/button[1]")).click();
-        //assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
-        //driver.findElement(By.className("close")).click();
-
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]/div/div[2]/div[3]/div[2]/button[1]")).click();
-        //assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
-        //driver.findElement(By.className("close")).click();
-
-        //driver.findElement(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]/div/div[2]/div[3]/div[2]/button[1])")).click();
-        //assertEquals(driver.findElement(By.className("content")).getText(), "The product has been added to your shopping cart");
-        //driver.findElement(By.className("close")).click();
-        notebooksPage.clickFourthItemAddToCartButton();
-        assertEquals(notebooksPage.checkShoppingCartSuccessNotification(), "The product has been added to your shopping cart");
-        notebooksPage.clickShoppingCartSuccessNotificationCloseButton();
-
-        notebooksPage.clickFifthItemAddToCartButton();
-        assertEquals(notebooksPage.checkShoppingCartSuccessNotification(), "The product has been added to your shopping cart");
-        notebooksPage.clickShoppingCartSuccessNotificationCloseButton();
-
-        notebooksPage.clickSixthItemAddToCartButton();
-        assertEquals(notebooksPage.checkShoppingCartSuccessNotification(), "The product has been added to your shopping cart");
-        notebooksPage.clickShoppingCartSuccessNotificationCloseButton();
         //14.	Verify that Wishlist on Menu bar displays 2
-        //assertEquals(driver.findElement(By.className("wishlist-qty")).getText(), "(2)");
-        assertEquals(notebooksPage.checkWishlistItemQuantityOnMenuBar(), "(2)");
         //15.	Verify that Shopping Cart on Menu bar displays 3
-        //assertEquals(driver.findElement(By.className("cart-qty")).getText(), "(3)");
+        wait.until(ExpectedConditions.textToBe(By.className("wishlist-qty"), "(2)"));
+        notebooksPage.clickFourthItemAddToCartButton();
+        wait.until(ExpectedConditions.textToBePresentInElement(notebooksPage.getShoppingCartSuccessNotification(), "The product has been added to your shopping cart"));
+        notebooksPage.clickSuccessNotificationCloseButton();
+
+        wait.until(ExpectedConditions.textToBe(By.className("cart-qty"), "(1)"));
+        notebooksPage.clickFifthItemAddToCartButton();
+        wait.until(ExpectedConditions.textToBePresentInElement(notebooksPage.getShoppingCartSuccessNotification(), "The product has been added to your shopping cart"));
+        notebooksPage.clickSuccessNotificationCloseButton();
+
+        wait.until(ExpectedConditions.textToBe(By.className("cart-qty"), "(2)"));
+        notebooksPage.clickSixthItemAddToCartButton();
+        wait.until(ExpectedConditions.textToBePresentInElement(notebooksPage.getShoppingCartSuccessNotification(), "The product has been added to your shopping cart"));
+        notebooksPage.clickSuccessNotificationCloseButton();
+        wait.until(ExpectedConditions.textToBe(By.className("cart-qty"), "(3)"));
+        wait.until(ExpectedConditions.textToBePresentInElement(notebooksPage.getShoppingCartSuccessNotification(), "The product has been added to your shopping cart"));
+
+        assertEquals(notebooksPage.checkWishlistItemQuantityOnMenuBar(), "(2)");
+
         assertEquals(notebooksPage.checkShoppingCartItemQuantityOnMenuBar(), "(3)");
         //16.	Close the browser
     }
 
-    //@Test
+    @Test
     @Order(4)
     @Description("Shopping Cart Test")
-    public void shoppingCartTest() {
+    public void shoppingCartTest() throws InterruptedException {
         //Precondition: Test 3
         //1.	Hover over Shopping Cart –Menu
         //2.	Verify that ‘Go To Cart’ – button is displayed
@@ -225,6 +193,8 @@ class RegisterTest extends GenericSeleniumTest {
         //assertTrue(driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).isDisplayed());
         //driver.findElement(By.xpath("/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")).click();
         //notebooksPage.clickGoToCartButton();
+        notebooksPage = new NotebooksPage(driver);
+        driver.manage().window().maximize();
         notebooksPage.hoverOverShoppingCartMenu();
         assertTrue(notebooksPage.goToCartButtonIsVisible());
         //4.	Verify that we have navigate to Shopping Cart Page
@@ -252,7 +222,7 @@ class RegisterTest extends GenericSeleniumTest {
         //7.	Close the browser
     }
 
-    //@Test
+    @Test
     @Order(5)
     @Description("Empty Shopping Cart Test")
     public void emptyShoppingCartTest() {

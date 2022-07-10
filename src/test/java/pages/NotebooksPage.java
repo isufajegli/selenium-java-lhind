@@ -1,11 +1,16 @@
 package pages;
 
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NotebooksPage {
     WebDriver driver;
@@ -37,13 +42,10 @@ public class NotebooksPage {
     WebElement wishlistSuccessNotification;
 
     @FindBy(className = "close")
-    WebElement wishlistSuccessNotificationCloseButton;
+    WebElement successNotificationCloseButton;
 
     @FindBy(className = "content")
     WebElement shoppingCartSuccessNotification;
-
-    @FindBy(className = "close")
-    WebElement shoppingCartSuccessNotificationCloseButton;
 
     @FindBy(className = "wishlist-qty")
     WebElement wishlistItemQuantityOnMenuBar;
@@ -51,29 +53,23 @@ public class NotebooksPage {
     @FindBy(className = "cart-qty")
     WebElement shoppingCartItemQuantityOnMenuBar;
 
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[1]")
-    WebElement itemOne;
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[2]")
-    WebElement itemTwo;
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[3]")
-    WebElement itemThree;
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[4]")
-    WebElement itemFour;
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[5]")
-    WebElement itemFive;
-    @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[6]")
-    WebElement itemSix;
+    @FindBys({
+            @FindBy(className = "item-grid"),
+            @FindBy(xpath = "/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div")
+    })
+    public List<WebElement> sellingProducts;
 
-    @FindBy(className = "cart-label")
+    @FindBy(id = "topcartlink")
     WebElement shoppingCartMenuBar;
-    @FindBy(xpath = "/html/body/div[6]/div[1]/div[1]/div[2]/div[2]/div/div[4]/button")
+    @FindBy(css = "#flyout-cart > div > div.buttons > button")
     WebElement goToCartButton;
 
     Actions action;
 
     public NotebooksPage(WebDriver driver) {
-        this.driver = driver;
         PageFactory.initElements(driver, this);
+        this.driver = driver;
+        action = new Actions(driver);
     }
 
     public void clickOnProductsPageSize() {
@@ -112,16 +108,12 @@ public class NotebooksPage {
         return wishlistSuccessNotification.getText();
     }
 
-    public void clickWishlistSuccessNotificationCloseButton() {
-        wishlistSuccessNotificationCloseButton.click();
+    public void clickSuccessNotificationCloseButton() {
+        successNotificationCloseButton.click();
     }
 
-    public String checkShoppingCartSuccessNotification() {
-        return shoppingCartSuccessNotification.getText();
-    }
-
-    public void clickShoppingCartSuccessNotificationCloseButton() {
-        shoppingCartSuccessNotificationCloseButton.click();
+    public WebElement getShoppingCartSuccessNotification() {
+        return shoppingCartSuccessNotification;
     }
 
     public String checkWishlistItemQuantityOnMenuBar() {
@@ -130,30 +122,6 @@ public class NotebooksPage {
 
     public String checkShoppingCartItemQuantityOnMenuBar() {
         return shoppingCartItemQuantityOnMenuBar.getText();
-    }
-
-    public boolean itemOneIsVisible() {
-        return itemOne.isDisplayed();
-    }
-
-    public boolean itemTwoIsVisible() {
-        return itemTwo.isDisplayed();
-    }
-
-    public boolean itemThreeIsVisible() {
-        return itemThree.isDisplayed();
-    }
-
-    public boolean itemFourIsVisible() {
-        return itemFour.isDisplayed();
-    }
-
-    public boolean itemFiveIsVisible() {
-        return itemFive.isDisplayed();
-    }
-
-    public boolean itemSixIsVisible() {
-        return itemSix.isDisplayed();
     }
 
     public boolean checkIfItemIsVisible(int item) {
@@ -168,9 +136,14 @@ public class NotebooksPage {
         goToCartButton.click();
     }
 
-    public void hoverOverShoppingCartMenu() {
+    public void hoverOverShoppingCartMenu() throws InterruptedException {
         action.moveToElement(shoppingCartMenuBar);
+        Thread.sleep(1000);
         action.moveToElement(goToCartButton);
         action.click().build().perform();
+    }
+
+    public int getSizeOfProductsDisplayed(){
+        return sellingProducts.size();
     }
 }

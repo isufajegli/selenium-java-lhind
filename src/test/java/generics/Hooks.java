@@ -18,7 +18,7 @@ public class Hooks {
 
     @BeforeAll
     public static void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\PC\\IdeaProjects\\selenium-java-lhind\\src\\main\\resources\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -26,8 +26,6 @@ public class Hooks {
 //        WebDriverManager.firefoxdriver().setup();
 //        WebDriverManager.edgedriver().setup();
     }
-    //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    //wait.until(ExpectedCondition.visibilityOfElementLocated(By.linkText(""));
 
     @AfterAll
     public static void afterTest() {

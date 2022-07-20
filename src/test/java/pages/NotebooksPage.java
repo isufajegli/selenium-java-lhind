@@ -124,18 +124,6 @@ public class NotebooksPage {
         return shoppingCartItemQuantityOnMenuBar.getText();
     }
 
-    public boolean checkIfItemIsVisible(int item) {
-        return !driver.findElements(By.xpath("/html/body/div[6]/div[3]/div/div[3]/div/div[2]/div[2]/div[2]/div/div/div[" + item + "]")).isEmpty();
-    }
-
-    public boolean goToCartButtonIsVisible() {
-        return goToCartButton.isDisplayed();
-    }
-
-    public void clickGoToCartButton() {
-        goToCartButton.click();
-    }
-
     public void hoverOverShoppingCartMenu() throws InterruptedException {
         action.moveToElement(shoppingCartMenuBar);
         Thread.sleep(1000);

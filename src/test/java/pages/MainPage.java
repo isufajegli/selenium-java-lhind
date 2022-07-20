@@ -54,8 +54,5 @@ public class MainPage {
         action.moveToElement(notebooksMenu);
         action.click().build().perform();
     }
-    public void clickNotebooksMenu(){
-        notebooksMenu.click();
-    }
 
 }
